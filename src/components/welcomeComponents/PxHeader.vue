@@ -6,15 +6,20 @@
           <px-icon class="mr-2" />
           <router-link
             :to="{ name: 'home' }"
-            class="header--title font-semibold text-xl tracking-tight"
-          >2NEL</router-link>
+            class="text-3xl header--title font-semibold tracking-tight"
+            >2NEL</router-link
+          >
         </div>
         <div class="">
-          <div class="flex gap-6">
+          <div class="flex gap-8 items-center mr-4">
             <router-link :to="{ name: 'about' }">Nosotros</router-link>
             <router-link :to="{ name: 'membership' }">Membresías</router-link>
             <router-link :to="{ name: 'login' }">Iniciar Sesión</router-link>
-            <router-link :to="{ name: 'signup' }">Regístrate</router-link>
+            <router-link :to="{ name: 'signup' }"
+              ><px-button class="text-xl" :color="buttonColor">
+                Regístrate
+              </px-button></router-link
+            >
           </div>
         </div>
       </nav>
@@ -23,19 +28,29 @@
 </template>
 
 <script>
-import PxIcon from '@/components/PxIcon'
+import PxIcon from "@/components/PxIcon";
+import PxButton from "@/components/PxButton";
 
 export default {
   name: "PxHeader",
+  data() {
+    return {
+      buttonColor: "black",
+    };
+  },
   components: {
     PxIcon,
+    PxButton,
   },
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.header--title {
-  font-family: 'Krona One', sans-serif;
+header {
+  height: 8vh;
+  font-size: 1.25rem;
 }
-
+.header--title {
+  font-family: var(--title-font);
+}
 </style>
