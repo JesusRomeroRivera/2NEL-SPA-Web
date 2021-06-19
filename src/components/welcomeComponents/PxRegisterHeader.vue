@@ -1,5 +1,5 @@
 <template>
-  <section class="headerRegister">
+  <section class="w-screen headerRegister flex flex-col items-center">
     <div class="textCircles">
       <div class="stepRol flex flex-col justify-center items-center">
         <h1>Elegir Rol</h1>
@@ -17,6 +17,19 @@
         <h1>Iniciar Sesión</h1>
         <div :class="getStep() >= 4 ? 'black' : ''" class="circle"></div>
       </div>
+    </div>
+    <div class="textLine">
+      <div
+        :class="getStep() >= 1 ? 'black' : ''"
+        class="rounded-l-2xl line"
+      ></div>
+      <div :class="getStep() >= 1 ? 'black' : ''" class="line"></div>
+      <div :class="getStep() >= 2 ? 'black' : ''" class="line"></div>
+      <div :class="getStep() >= 3 ? 'black' : ''" class="line"></div>
+      <div
+        :class="getStep() >= 4 ? 'black' : ''"
+        class="rounded-r-2xl line"
+      ></div>
     </div>
   </section>
 </template>
@@ -45,6 +58,20 @@ export default {
 };
 </script>
 <style scoped>
+.textLine {
+  position: absolute;
+  top: 11vh;
+  display: 100%;
+  display: grid;
+  grid-template-columns: 27.5vw 7.5vw 10vw 5vw 30vw;
+  justify-items: center;
+  align-items: center;
+}
+.line {
+  width: 20vw;
+  height: 0.6rem;
+  background-color: #ababab;
+}
 .headerRegister {
   width: 80vw;
 }

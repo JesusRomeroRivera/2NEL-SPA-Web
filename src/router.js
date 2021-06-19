@@ -48,7 +48,7 @@ export default new Router({
       component: Principal,
     },
     {
-      path: "/registerDetails/:step",
+      path: "/registerDetails",
       name: "registerDetails",
       component: RegisterDetails,
     },

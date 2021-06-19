@@ -1,10 +1,27 @@
 <template>
-  <section class="absolute h-screen w-screen bg-white grid">
+  <section class="bigSection absolute h-screen w-screen bg-white grid">
     <px-register-header :step="step"> </px-register-header>
-    <first-step-rol v-show="step == '1'"></first-step-rol>
-    <second-step-account v-show="step == '2'"></second-step-account>
-    <third-step-confirm v-show="step == '3'"></third-step-confirm>
-    <fourth-step-login v-show="step == '4'"></fourth-step-login>
+    <first-step-rol
+      @getUser="getUser"
+      @changePageTwo="changePageTwo"
+      v-show="step == '1'"
+    ></first-step-rol>
+    <second-step-account
+      :data="dataUser"
+      @changePageThree="changePageThree"
+      @changePageOne="changePageOne"
+      @getUser="getUser2"
+      v-show="step == '2'"
+    ></second-step-account>
+    <third-step-confirm
+      @changePageTwo="changePageTwo"
+      @changePageFourth="changePageFourth"
+      v-show="step == '3'"
+    ></third-step-confirm>
+    <fourth-step-login
+      @changePageThree="changePageThree"
+      v-show="step == '4'"
+    ></fourth-step-login>
   </section>
 </template>
 <script>
@@ -20,6 +37,12 @@ export default {
     return {
       buttonColor: "black",
       step: "1",
+      dataUser: {
+        type: "",
+        name: "",
+        surname: "",
+        description: "",
+      },
     };
   },
   components: {
@@ -30,39 +53,32 @@ export default {
     ThirdStepConfirm,
     FourthStepLogin,
   },
-  watch: {
-    $route() {
-      this.getUrl();
-    },
-  },
   methods: {
-    nextPage() {
-      this.numberPage += 1;
+    changePageOne() {
+      this.step = "1";
     },
-    getUrl() {
-      const theStep = this.$route.params.step;
-      switch (theStep) {
-        case "stepRol":
-          this.step = "1";
-          break;
-        case "stepAccount":
-          this.step = "2";
-          break;
-        case "stepConfirm":
-          this.step = "3";
-          break;
-        case "stepLogin":
-          this.step = "4";
-          break;
-        default:
-          break;
-      }
+    changePageTwo() {
+      this.step = "2";
+    },
+    changePageThree() {
+      this.step = "3";
+    },
+    changePageFourth() {
+      this.step = "4";
+    },
+    getUser(typeUser) {
+      this.dataUser.type = typeUser;
+    },
+    getUser2(namesDetails) {
+      this.dataUser.name = namesDetails.name;
+      this.dataUser.surname = namesDetails.surname;
+      this.dataUser.description = namesDetails.description;
     },
   },
 };
 </script>
 <style scoped>
-section {
+.bigSection {
   top: 0;
   z-index: 10;
   grid-template-rows: 20vh 80vh;

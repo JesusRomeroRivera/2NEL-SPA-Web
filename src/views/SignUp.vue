@@ -5,7 +5,7 @@
       <article
         class="login--container p-40 pb-20 flex flex-col justify-between"
       >
-        <h1>Iniciar Sesión</h1>
+        <h1>Regístrate</h1>
         <p>
           ¿Ya tienes una cuenta?
           <router-link class="hover:underline" :to="{ name: 'login' }"

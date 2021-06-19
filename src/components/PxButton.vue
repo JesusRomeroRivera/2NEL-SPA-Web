@@ -2,7 +2,13 @@
   <button
     @click="buttonClick"
     class="button"
-    :class="this.color == 'black' ? 'black' : 'white'"
+    :class="
+      this.color == 'black'
+        ? 'black'
+        : this.color == 'white'
+        ? 'white'
+        : 'withBorder'
+    "
   >
     <p>
       <slot></slot>
@@ -35,6 +41,11 @@ export default {
 .black {
   background-color: black;
   color: white;
+}
+.withBorder {
+  background-color: white;
+  color: black;
+  border: 3px solid black;
 }
 .white {
   background-color: white;
