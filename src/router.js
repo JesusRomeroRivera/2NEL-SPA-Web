@@ -7,6 +7,7 @@ import Membership from "@/views/Membership";
 import Login from "@/views/Login";
 import SignUp from "@/views/SignUp";
 import Principal from "@/views/Principal";
+import Solicitudes from "@/views/Solicitudes";
 import RegisterDetails from "@/views/RegisterDetails";
 import Error from "@/views/Error";
 
@@ -43,14 +44,19 @@ export default new Router({
       component: SignUp,
     },
     {
-      path: "/principal",
+      path: "/registerDetails",
+      name: "registerDetails",
+      component: RegisterDetails,
+    },
+    {
+      path: "/principal/:id",
       name: "principal",
       component: Principal,
     },
     {
-      path: "/registerDetails",
-      name: "registerDetails",
-      component: RegisterDetails,
+      path: "/principal/solicitudes/",
+      name: "solicitudes",
+      component: Solicitudes,
     },
     {
       path: "*",

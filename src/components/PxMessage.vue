@@ -70,4 +70,34 @@ export default {
   font-family: var(--principal-font);
   font-size: 7rem;
 }
+@media only screen and (max-width: 1024px) {
+  .Message {
+    font-size: 5.4rem;
+  }
+  .texto {
+    padding: 0 16rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .Message {
+    font-size: 4.2rem;
+  }
+  .texto {
+    padding: 0 8rem;
+  }
+  .TextStartup {
+    margin-bottom: 0;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .Message {
+    font-size: 3rem;
+  }
+  .texto {
+    padding: 0 2rem;
+  }
+  .TextStartup {
+    font-size: 1.4rem !important;
+  }
+}
 </style>

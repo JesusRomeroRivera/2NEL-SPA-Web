@@ -54,4 +54,38 @@ export default {
   font-size: 1.5rem;
   width: 40vw;
 }
+
+@media only screen and (max-width: 1024px) {
+  .principal {
+    padding: 0 70px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .principal {
+    padding: 0 60px;
+  }
+  .principal-title {
+    line-height: 5.6rem;
+    font-size: 6rem;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .principal {
+    padding: 0 50px;
+    height: 400px;
+    align-items: center;
+  }
+  .principal-title {
+    line-height: 4rem;
+    font-size: 4.4rem;
+    text-align: center;
+  }
+  .principal-text {
+    margin-top: 4.5rem;
+    font-size: 1.5rem;
+    width: auto;
+    text-align: center;
+  }
+}
 </style>

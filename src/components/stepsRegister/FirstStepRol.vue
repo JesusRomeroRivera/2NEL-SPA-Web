@@ -135,9 +135,48 @@ section {
 h1 {
   font-size: 4rem;
   font-family: var(--principal-font);
+  text-align: center;
 }
 p {
   font-family: var(--text-font);
   font-size: 1.8rem;
+  text-align: center;
+}
+@media only screen and (max-width: 768px) {
+  section {
+    padding: 2.55vh 7.5vw 7.5vh 7.5vw;
+    height: 80vh;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 3.6rem;
+  }
+  p {
+    font-size: 1.6rem;
+  }
+  .images {
+    gap: 1.6rem;
+  }
+}
+@media only screen and (max-width: 580px) {
+  section {
+    padding: 2.55vh 7.5vw 7.5vh 7.5vw;
+    height: 140vh;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    box-sizing: border-box;
+  }
+  h1 {
+    font-size: 2.8rem;
+  }
+  p {
+    font-size: 1.5rem;
+  }
+  .images {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
 }
 </style>

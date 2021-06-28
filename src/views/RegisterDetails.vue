@@ -7,18 +7,20 @@
       v-show="step == '1'"
     ></first-step-rol>
     <second-step-account
-      :data="dataUser"
+      :data="this.getTheData"
       @changePageThree="changePageThree"
       @changePageOne="changePageOne"
-      @getUser="getUser2"
+      @getUser2="getUser2"
       v-show="step == '2'"
     ></second-step-account>
     <third-step-confirm
+      :data="this.getTheData"
       @changePageTwo="changePageTwo"
       @changePageFourth="changePageFourth"
       v-show="step == '3'"
     ></third-step-confirm>
     <fourth-step-login
+      :data="this.getTheData"
       @changePageThree="changePageThree"
       v-show="step == '4'"
     ></fourth-step-login>
@@ -42,6 +44,8 @@ export default {
         name: "",
         surname: "",
         description: "",
+        urlImage: "",
+        skills: [],
       },
     };
   },
@@ -52,6 +56,11 @@ export default {
     SecondStepAccount,
     ThirdStepConfirm,
     FourthStepLogin,
+  },
+  computed: {
+    getTheData() {
+      return this.dataUser;
+    },
   },
   methods: {
     changePageOne() {
@@ -69,10 +78,12 @@ export default {
     getUser(typeUser) {
       this.dataUser.type = typeUser;
     },
-    getUser2(namesDetails) {
-      this.dataUser.name = namesDetails.name;
-      this.dataUser.surname = namesDetails.surname;
-      this.dataUser.description = namesDetails.description;
+    getUser2(userDetails) {
+      this.dataUser.name = userDetails.name;
+      this.dataUser.surname = userDetails.surname;
+      this.dataUser.description = userDetails.description;
+      this.dataUser.urlImage = userDetails.urlImage;
+      this.dataUser.skills = userDetails.skills;
     },
   },
 };
@@ -82,5 +93,15 @@ export default {
   top: 0;
   z-index: 10;
   grid-template-rows: 20vh 80vh;
+}
+@media only screen and (max-width: 768px) {
+  .bigSection {
+    height: auto;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .bigSection {
+    grid-template-rows: 10vh 80vh;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <main>
     <px-header></px-header>
-    <router-view class="w-screen flex justify-center"></router-view>
+    <router-view class="flex justify-center"></router-view>
 
     <px-footer></px-footer>
   </main>
@@ -37,6 +37,7 @@ html {
   overflow-x: hidden;
 }
 #app {
+  width: 100vw;
   text-align: center;
   color: #2c3e50;
 }

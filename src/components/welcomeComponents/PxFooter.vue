@@ -1,5 +1,5 @@
 <template>
-  <footer class="shadow w-screen">
+  <footer class="shadow">
     <div class="flex justify-between items-center p-6">
       <div class="flex items-center flex-shrink-0 text-black mr-6">
         <px-icon class="mr-2" />
@@ -41,14 +41,19 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 footer {
-  height: 8vh;
 }
 .footer--title {
   font-family: "Krona One", sans-serif;
 }
-
 img {
   height: 24px;
   width: auto;
+}
+@media only screen and (max-width: 580px) {
+  h3 {
+    display: none;
+  }
+  p {
+  }
 }
 </style>

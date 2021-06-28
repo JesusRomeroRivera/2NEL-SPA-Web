@@ -144,4 +144,20 @@ input {
   margin: 0;
   margin-right: 1rem;
 }
+@media only screen and (max-width: 1024px) {
+  .login--container {
+    padding: 7rem 5rem !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  section {
+    width: 100%;
+    box-sizing: border-box;
+    height: 83.5vh;
+    grid-template-columns: 1fr;
+  }
+  img {
+    display: none;
+  }
+}
 </style>

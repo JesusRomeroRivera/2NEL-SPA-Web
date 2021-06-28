@@ -15,15 +15,24 @@
       >
       <div class="firstDetails grid">
         <div class="imgDetails flex flex-col justify-around items-start">
-          <img src="" alt="Tu Perfil" />
-          <input type="url" placeholder="Ingrese Url de la imagen" />
+          <img :src="urlImage" alt="Tu Perfil" />
+          <input
+            v-model="urlImage"
+            type="url"
+            placeholder="Ingrese Url de la imagen"
+          />
         </div>
         <div class="nameDetails flex flex-col justify-start items-start">
           <h2>Nombre Completo</h2>
           <label for="name">Nombres</label>
-          <input id="inputName" type="text" name="name" />
+          <input v-model="name" id="inputName" type="text" name="name" />
           <label for="surname">Apellidos</label>
-          <input id="inputSurname" type="text" name="surname" />
+          <input
+            v-model="surname"
+            id="inputSurname"
+            type="text"
+            name="surname"
+          />
         </div>
       </div>
       <div class="habilidades">
@@ -31,9 +40,22 @@
           Habilidades (Máximo 30):
           <small>Separado por guion (Ej: Vue - Angular)</small>
         </h2>
-        <input type="text" />
+        <div class="skillsList flex gap-2">
+          <p class="indiText" :key="l" v-for="l in skills">
+            {{ l }}
+            <button
+              @click="deleteSkill(l)"
+              style="font-weight: 700"
+              type="form"
+            >
+              X
+            </button>
+          </p>
+        </div>
+        <input v-model="skillText" type="text" />
         <h2 class="finalTitle">Descripción</h2>
         <textarea
+          v-model="description"
           value=""
           if="inputDescrip"
           name="Descripcion"
@@ -72,36 +94,86 @@ export default {
       bottonBlack: "black",
       withBorder: "withBorder",
       noData: false,
+      name: "",
+      surname: "",
+      urlImage: "",
+      description: "",
+      skillText: "",
+      skills: [],
     };
   },
   components: {
     PxButton,
   },
   computed: {
-    /*whatSelected() {
+    isAnySelected() {
+      return this.name == "" || this.surname == "" || this.description == "";
+    },
+    whatSelected() {
       return {
-        name: document.getElementById("inputName").value, 
-        surname: document.getElementById("inputSurname").value, 
-        description: document.getElementById("inputDescrip").value, 
+        name: this.name,
+        surname: this.surname,
+        description: this.description,
+        urImage: this.urlImage,
+        skills: this.skills,
+      };
+    },
+    lastLetter() {
+      return this.skillText.substring(
+        this.skillText.length - 1,
+        this.skillText.length
+      );
+    },
+  },
+  watch: {
+    skillText: function () {
+      if (this.lastLetter == "-") {
+        let word =
+          this.skillText.substring(
+            this.skillText.length - 2,
+            this.skillText.length - 1
+          ) == " "
+            ? this.skillText.substring(0, this.skillText.length - 2)
+            : this.skillText.substring(0, this.skillText.length - 1);
+        if (this.skills.indexOf(word) == -1) {
+          this.skills.push(word);
+        }
+        this.skillText = "";
       }
     },
-    allWithValue(){
-      return document.getElementById("inputName").value == null ||
-      document.getElementById("inputSurname").value == null ||
-      document.getElementById("inputDescrip").value == null
-    }*/
   },
   methods: {
+    deleteSkill(name) {
+      this.skills.splice(this.skills.indexOf(name), 1);
+    },
     changePageOne() {
       this.$emit("changePageOne");
     },
     changePageThree() {
-      this.$emit("changePageThree");
+      if (!this.isAnySelected) {
+        this.$emit("getUser2", this.whatSelected);
+        this.$emit("changePageThree");
+      }
     },
   },
 };
 </script>
 <style scoped>
+.indiText {
+  background-color: white;
+  color: black;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  font-family: var(--text-font);
+  margin-bottom: 1rem;
+  display: block;
+  text-align: center;
+}
+.skillsList {
+  width: 50vw;
+  overflow-x: scroll;
+}
 textarea {
   width: 100%;
   font-family: var(--principal-font);
@@ -156,12 +228,44 @@ input {
 .textoTop {
   font-family: var(--text-font);
   font-size: 1.6rem;
+  margin: 1rem 0;
 }
 section {
   padding: 0 12.5vw 5vh 12.5vw;
-  height: 130vh;
+  height: 140vh;
   display: grid;
   grid-template-rows: 1fr 7fr 1fr;
   box-sizing: border-box;
+}
+@media only screen and (max-width: 1024px) {
+  section {
+    height: 145vh;
+    padding: 0 10vw;
+  }
+}
+@media only screen and (max-width: 768px) {
+  section {
+    height: 165vh;
+    padding: 0 10vw;
+  }
+  .firstDetails {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+  }
+  .imgDetails {
+    margin-bottom: 15px;
+  }
+
+  input {
+    outline: none;
+    width: 100%;
+  }
+  .titleTop {
+    font-size: 2.2rem;
+  }
+  .textoTop {
+    font-size: 1.5rem;
+  }
 }
 </style>

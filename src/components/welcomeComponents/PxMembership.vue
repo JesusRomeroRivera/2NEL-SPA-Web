@@ -7,8 +7,8 @@
       "
     >
       <div class="theCard bg-black flex flex-col px-10 py-6 justify-center">
-        <h1>{{ this.title }}</h1>
-        <p>{{ this.text }}</p>
+        <h1 class="theCardTitle">{{ this.title }}</h1>
+        <p class="theCardText">{{ this.text }}</p>
       </div>
     </div>
     <div class="cardsContainer flex gap-10 px-40 py-20">
@@ -58,17 +58,17 @@ export default {
 <style scoped>
 .cardsContainer {
   width: 100vw;
-  height: 100%;
+  height: auto;
 }
 .membershipData {
   width: 100vw;
-  height: 100rem;
+  height: 110rem;
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
 .theCard {
   width: 70vw;
-  height: 20rem;
+  height: 21rem;
 }
 .theImg {
   width: 100vw;
@@ -99,5 +99,60 @@ p {
   font-size: 1.6rem;
   color: white;
   text-align: center;
+}
+@media only screen and (max-width: 1024px) {
+  .membershipData {
+    height: 90rem;
+  }
+  .cardsContainer {
+    padding: 2rem 6rem !important;
+  }
+  .membresia {
+    font-size: 1.5rem !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .cardsContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .membresia {
+    height: 30rem;
+  }
+  .membershipData {
+    height: 140rem;
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+  }
+  .theCardTitle {
+    font-size: 2.6rem;
+  }
+  .theCardText {
+    font-size: 1.5rem;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .cardsContainer {
+    gap: 4rem !important;
+    padding: 1rem !important;
+  }
+  .membresia {
+    height: 30rem;
+  }
+  .membershipData {
+    height: 140rem;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+  }
+  .theCard {
+    width: 80vw !important;
+  }
+  .theCardTitle {
+    font-size: 2.2rem;
+  }
+  .theCardText {
+    font-size: 1.4rem;
+  }
 }
 </style>

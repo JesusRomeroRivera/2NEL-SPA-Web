@@ -28,7 +28,7 @@
         >
       </div>
       <div class="buttonContainer flex justify-end items-center">
-        <router-link :to="{ name: 'principal' }">
+        <router-link :to="{ name: 'principal', params: { id: data.name } }">
           <px-button class="text-2xl" :color="bottonBlack">Siguiente</px-button>
         </router-link>
       </div>
@@ -38,7 +38,7 @@
       class="emailModal flex justify-center items-center w-screen shadow"
     >
       <div class="content--container p-6">
-        <div class="flex gap-10 items-end">
+        <div class="containerCards flex gap-10 items-end">
           <px-card-membership
             :title="'Free'"
             class="membresia text-xl bg-black"
@@ -95,7 +95,7 @@ import PxButton from "@/components/PxButton";
 import PxCardMembership from "@/components/welcomeComponents/PxCardMembership";
 
 export default {
-  //props: ["dataUser"],
+  props: ["data"],
   data() {
     return {
       bottonWhite: "white",
@@ -161,5 +161,29 @@ section {
   grid-template-rows: 7fr 1fr;
   box-sizing: border-box;
   justify-content: center;
+}
+@media only screen and (max-width: 1024px) {
+  .membresia {
+    width: auto;
+  }
+}
+@media only screen and (max-width: 768px) {
+  section {
+    height: auto;
+    padding: 0 10vw;
+  }
+  .containerCards {
+    flex-direction: column;
+  }
+  .formDiv {
+    width: 80vw;
+  }
+  .membresia {
+    width: 80vw;
+    height: auto;
+  }
+  .emailModal {
+    height: 160vh;
+  }
 }
 </style>

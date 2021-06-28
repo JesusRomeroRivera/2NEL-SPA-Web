@@ -23,7 +23,7 @@ export default {
 </script>
 <style scoped>
 section {
-  height: 43.5rem;
+  height: 38.5rem;
   overflow-x: scroll;
 }
 .card {
@@ -44,5 +44,32 @@ p {
 small {
   font-size: 1.5rem;
   font-family: var(--text-font);
+}
+@media only screen and (max-width: 1024px) {
+  h1 {
+    font-size: 2.4rem;
+    height: 6rem;
+  }
+  p {
+    font-size: 1.5rem;
+  }
+  small {
+    font-size: 1.4rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .card {
+    height: 100%;
+    min-width: 50%;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .card {
+    height: 100%;
+    min-width: 100%;
+  }
+  h1 {
+    height: 3rem;
+  }
 }
 </style>

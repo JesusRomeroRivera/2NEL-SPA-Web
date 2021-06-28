@@ -8,7 +8,7 @@ module.exports = {
       display: ["Gilroy", "sans-serif"],
       body: ["Graphik", "sans-serif"],
     },
-    extend: {
+    extends: {
       colors: {
         cyan: "#9cdbff",
       },

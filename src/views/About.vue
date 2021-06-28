@@ -4,7 +4,7 @@
       >Buscando conectar tus ideas y trabajos con otras personas</px-message
     >
     <section class="w-screen FirstText">
-      <p class="text-3xl px-32 py-24">
+      <p class="textAbout text-3xl px-32 py-24">
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
@@ -105,5 +105,24 @@ h1 {
 }
 p {
   font-family: var(--text-font);
+}
+@media only screen and (max-width: 768px) {
+  .FirstText {
+    gap: 2rem !important;
+  }
+  h1 {
+    font-size: 3rem !important;
+  }
+  p {
+    font-size: 1.5rem !important;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .FirstText {
+    flex-direction: column !important;
+  }
+  .textAbout {
+    padding: 3.8rem 4.5rem !important;
+  }
 }
 </style>
