@@ -108,8 +108,18 @@
               >Perfil</router-link
             >
             <img src="../../assets/iconLupa.png" alt="Lupa" />
-            <div class="theFoto flex justify-center items-center">
+            <div
+              @click="appearLabel"
+              class="theFoto flex justify-center items-center"
+            >
               <div>V</div>
+              <div
+                v-if="appearLabelBool"
+                @click="closeSesion"
+                class="CerrarSesion"
+              >
+                Cerrar Sesión
+              </div>
             </div>
           </div>
         </div>
@@ -148,6 +158,7 @@ export default {
       buttonColor: "black",
       navAppears: false,
       menuOpen: false,
+      appearLabelBool: false,
     };
   },
   components: {
@@ -160,6 +171,14 @@ export default {
     },
   },
   methods: {
+    appearLabel() {
+      this.appearLabelBool = !this.appearLabelBool;
+    },
+    closeSesion() {
+      this.$router.push({
+        name: "home",
+      });
+    },
     navToggle() {
       const menuBtn = document.querySelector(".menu-btn");
       this.navAppears = !this.navAppears;
@@ -176,6 +195,16 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.CerrarSesion {
+  position: fixed;
+  right: 2vw;
+  top: 6vh;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
 img {
   height: 16px;
 }

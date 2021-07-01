@@ -74,7 +74,7 @@
 
 <script>
 import PxButton from "@/components/PxButton";
-import UserService from "@/services/user-service";
+import UserService from "@/services/user-service.js";
 
 export default {
   data() {
@@ -116,7 +116,7 @@ export default {
         localStorage.setItem("user", response.data);
         this.$router.push({
           path: "/principal",
-          params: { userInformation: response.data },
+          params: { user: response.data.id },
         });
       });
     },

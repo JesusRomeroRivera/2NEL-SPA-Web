@@ -8,7 +8,9 @@
           {{ u.description.substring(0, 40)
           }}{{ u.description.length > 50 ? "..." : "" }}
         </p>
-        <small class="text-gray-700">De: {{ u.city }}</small>
+        <small class="text-gray-700"
+          >De: {{ u.city }}{{ u.businessEmail }}</small
+        >
       </div>
     </article>
   </section>

@@ -76,6 +76,7 @@ export default {
       EntrepreneurService.get(this.$route.params.user)
         .then((response) => {
           this.userInformation = response.data;
+          this.$route.params.user = response.data;
         })
         .catch((e) => {
           console.log(e);
@@ -83,6 +84,7 @@ export default {
       FreelancerService.get(this.$route.params.user)
         .then((response) => {
           this.userInformation = response.data;
+          this.$route.params.user = response.data;
         })
         .catch((e) => {
           console.log(e);
@@ -90,6 +92,7 @@ export default {
       InvestorService.get(this.$route.params.user)
         .then((response) => {
           this.userInformation = response.data;
+          this.$route.params.user = response.data;
         })
         .catch((e) => {
           console.log(e);
