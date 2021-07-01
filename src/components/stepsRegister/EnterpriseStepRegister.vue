@@ -1,18 +1,16 @@
 <template>
   <section>
     <div class="flex flex-col items-start justify-start">
-      <h1 class="titleTop">Completa tu perfil</h1>
+      <h1 class="titleTop">Completa el perfil de tu empresa</h1>
       <p class="textoTop">
-        Rellena tu perfil para mejorar el servicio cuando visiten tu perfil. Es
-        importante que registre información verídica
+        Rellena tu perfil para que inversionistas y colaboradores entiendan
+        mejor tu empresa y startup cuando visiten tu perfil. Es importante que
+        se registre información verídica
       </p>
     </div>
-    <form class="bg-black">
-      <h2>Foto de Perfil</h2>
-      <small
-        >Esta foto se usará para identificarte. Muestra tu cara completa y en un
-        lugar con buena iluminación</small
-      >
+    <form class="bg-white">
+      <h2>Foto de Perfil de la Empresa</h2>
+      <small>Esta foto se usará para identificar tu empresa</small>
       <div class="firstDetails grid">
         <div class="imgDetails flex flex-col justify-around items-start">
           <img :src="imageUrl" alt="Tu Perfil" />
@@ -23,26 +21,20 @@
           />
         </div>
         <div class="nameDetails flex flex-col justify-start items-start">
-          <h2>Datos Completos</h2>
-          <label for="firstName">Nombres</label>
-          <input v-model="firstName" type="text" name="firstName" />
-          <label for="lastName">Apellidos</label>
+          <h2 class="label">Nombre de la empresa</h2>
+          <input v-model="name" type="text" name="name" />
+          <h2 class="label">Teléfono corporativo</h2>
           <input
-            v-model="lastName"
+            v-model="corpNumber"
             id="inputSurname"
             type="text"
-            name="lastName"
+            name="corpNumber"
           />
-          <label for="city">Ciudad: </label>
-          <input v-model="city" type="text" name="city" />
         </div>
       </div>
       <div class="habilidades">
-        <h2 class="finalTitle">
-          Especialidad:
-          <small>Habilidad que consideres resaltar</small>
-        </h2>
-        <input v-model="specialty" type="text" />
+        <h2 class="finalTitle">E-mail corporativo:</h2>
+        <input v-model="businessEmail" type="text" />
         <h2 class="finalTitle">Descripción</h2>
         <textarea
           v-model="description"
@@ -57,15 +49,15 @@
     <div class="buttonContainer flex justify-around items-center">
       <px-button
         class="text-2xl"
-        @custom-click="changePageOne"
+        @custom-click="changePageThree"
         :color="withBorder"
         >Volver</px-button
       >
       <px-button
         class="text-2xl"
-        @custom-click="changePageThree"
+        @custom-click="changePageFourth"
         :color="bottonBlack"
-        >Siguiente</px-button
+        >Registrar Empresa</px-button
       >
       <p v-if="noData" class="text-right mr-12 text-red-600 m-0">
         Por favor ingrese todos los datos
@@ -75,52 +67,53 @@
 </template>
 <script>
 import PxButton from "@/components/PxButton";
+import EnterpriseService from "@/services/enterprise-service.js";
 
 export default {
-  props: ["data"],
+  props: ["data", "id"],
+  components: {
+    PxButton,
+  },
   data() {
     return {
       bottonWhite: "white",
       bottonBlack: "black",
       withBorder: "withBorder",
       noData: false,
-      firstName: "",
-      lastName: "",
-      imageUrl: "",
+      name: "",
+      businessEmail: "",
       description: "",
-      specialty: "",
-      city: "",
+      corpNumber: "",
+      imageUrl: "",
     };
   },
-  components: {
-    PxButton,
-  },
   computed: {
-    isAnySelected() {
-      return (
-        this.firstName == "" || this.lastName == "" || this.description == ""
-      );
-    },
     whatSelected() {
       return {
-        firstName: this.firstName,
-        lastName: this.lastName,
+        name: this.name,
+        businessEmail: this.businessEmail,
         description: this.description,
         imageUrl: this.imageUrl,
-        specialty: this.specialty,
-        city: this.city,
+        corpNumber: this.corpNumber,
       };
     },
   },
   methods: {
-    changePageOne() {
-      this.$emit("changePageOne");
-    },
     changePageThree() {
-      if (!this.isAnySelected) {
-        this.$emit("getUser2", this.whatSelected);
-        this.$emit("changePageThree");
-      }
+      this.$emit("changePageThree");
+    },
+    registerEnterprise(userId, dataUser) {
+      EnterpriseService.create(userId, dataUser)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    changePageFourth() {
+      this.registerEnterprise(this.id, this.whatSelected);
+      this.$emit("changePageFourth");
     },
   },
 };
@@ -142,15 +135,16 @@ textarea {
   font-family: var(--principal-font);
   font-size: 1.4rem;
   padding: 1rem;
-  color: black;
+  border: 1px solid black;
+  border-radius: 15px;
 }
 .finalTitle {
   margin: 1rem 0;
 }
 img {
-  width: 25vw;
-  height: 30vh;
-  background-color: #343434;
+  width: 80%;
+  height: 80%;
+  background-color: white;
 }
 h2 {
   font-size: 2.2rem;
@@ -160,9 +154,7 @@ small {
   font-family: var(--text-font);
   font-size: 1.4rem;
 }
-label {
-  font-family: var(--text-font);
-  font-size: 1.6rem;
+.label {
   margin-top: 1.8rem;
   margin-bottom: 0.4rem;
 }
@@ -171,15 +163,17 @@ label {
 }
 form {
   padding: 3rem 5rem;
-  color: white;
+  color: black;
   display: grid;
   grid-auto-rows: 0.5fr 0.5fr 4fr 5fr;
+  border: 1px solid black;
+  border-radius: 2rem;
 }
 input {
   outline: none;
   width: 80%;
   background-color: transparent;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid black;
   font-size: 1.6rem;
 }
 .titleTop {
@@ -208,11 +202,6 @@ section {
   section {
     height: 165vh;
     padding: 0 10vw;
-  }
-  img {
-    width: 220px;
-    height: 220px;
-    background-color: #343434;
   }
   .firstDetails {
     grid-template-columns: 1fr;

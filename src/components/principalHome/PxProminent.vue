@@ -1,37 +1,24 @@
 <template>
-  <section class="w-10/12 flex gap-x-4">
-    <article class="card flex flex-col" v-for="u in users" :key="u.name">
+  <section>
+    <article class="card">
       <img class="bg-gray-200" />
-      <div class="p-8 w-full border-box text-container">
-        <h1>{{ u.firstName }}{{ u.name }} {{ u.lastName }}</h1>
-        <p class="my-8">{{ u.description }}</p>
-        <small class="text-gray-700">De: {{ u.city }}</small>
+      <div class="p-6 border-box text-container">
+        <h1>{{ data.name }}</h1>
+        <p>{{ data.description }}</p>
+        <small class="text-gray-700">De: {{ data.enterprise }}</small>
       </div>
     </article>
   </section>
 </template>
 <script>
 export default {
-  props: ["users"],
-  data() {
-    return {
-      buttonColor: "black",
-    };
-  },
-  components: {},
+  props: ["data"],
 };
 </script>
 <style scoped>
-section {
-  height: 38.5rem;
-  overflow-x: scroll;
-}
-.card {
-  height: 100%;
-  min-width: 32.5%;
-}
-img {
-  height: 20rem;
+article {
+  display: grid;
+  grid-template-rows: 3fr 2fr;
 }
 h1 {
   font-size: 2.5rem;
@@ -44,6 +31,14 @@ p {
 small {
   font-size: 1.5rem;
   font-family: var(--text-font);
+}
+.card {
+  height: 50rem;
+}
+.text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 @media only screen and (max-width: 1024px) {
   h1 {
@@ -58,15 +53,20 @@ small {
   }
 }
 @media only screen and (max-width: 768px) {
+  article {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+  }
   .card {
-    height: 100%;
-    min-width: 50%;
+    height: 40rem;
   }
 }
 @media only screen and (max-width: 580px) {
+  article {
+    display: grid;
+    grid-template-rows: 3fr 2fr;
+  }
   .card {
-    height: 100%;
-    min-width: 100%;
   }
   h1 {
     height: 3rem;

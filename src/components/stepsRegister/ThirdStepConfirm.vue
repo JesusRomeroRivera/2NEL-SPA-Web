@@ -9,11 +9,11 @@
           <h2>Nombres Completos</h2>
           <h5>{{ data.name }} {{ data.surname }}</h5>
           <h2>Tipo:</h2>
-          <h5>{{ data.type.toUpperCase() }}</h5>
+          <h5>{{ type.toUpperCase() }}</h5>
         </div>
-        <div class="imgDetails">
+        <div class="imgDetails flex flex-col items-center">
           <h2 class="text-center">Foto de perfil</h2>
-          <img :src="data.urlImage" alt="Tu Perfil" />
+          <img :src="data.imageUrl" alt="Tu Perfil" />
         </div>
       </div>
       <div class="descriptionDetail mt-4">
@@ -21,7 +21,7 @@
         <p class="small">
           {{ data.description }}
         </p>
-        <h2 class="topMargin">Habilidades</h2>
+        <h2 class="topMargin">Especialidad</h2>
         <div class="skillsList flex gap-2">
           <p class="indiText" :key="l" v-for="l in data.skills">{{ l }}</p>
         </div>
@@ -45,25 +45,68 @@
 </template>
 <script>
 import PxButton from "@/components/PxButton";
+import FreelancerService from "@/services/freelancer-service.js";
+import InvestorService from "@/services/investor-service.js";
+import EntrepreneurService from "@/services/entrepreneur-service.js";
 
 export default {
-  props: ["data"],
+  props: ["data", "type"],
   data() {
     return {
       bottonWhite: "white",
       bottonBlack: "black",
       withBorder: "withBorder",
+      dataUser: {},
     };
   },
   components: {
     PxButton,
   },
   methods: {
+    registerFreelancer(userId, dataUser) {
+      FreelancerService.create(userId, dataUser)
+        .then((response) => {
+          console.log(response);
+          this.$route.params.user = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    registerInvestor(userId, dataUser) {
+      InvestorService.create(userId, dataUser)
+        .then((response) => {
+          console.log(response);
+          this.$route.params.user = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    registerEntrepreneur(userId, dataUser) {
+      EntrepreneurService.create(userId, dataUser)
+        .then((response) => {
+          console.log(response);
+          this.$route.params.user = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     changePageTwo() {
       this.$emit("changePageTwo");
     },
     changePageFourth() {
-      this.$emit("changePageFourth");
+      if (this.type == "freelancer")
+        this.registerFreelancer(this.$route.params.user.id, this.data);
+      if (this.type == "investor")
+        this.registerInvestor(this.$route.params.user.id, this.data);
+      if (this.type == "entrepreneur") {
+        this.registerEntrepreneur(this.$route.params.user.id, this.data);
+        this.$emit("changePageEnterprise", this.$route.params.user.id);
+      } else {
+        this.$emit("changePageFourth");
+      }
     },
   },
 };
@@ -99,8 +142,9 @@ h2 {
   grid-template-columns: 1fr 1fr;
 }
 img {
-  width: 100%;
-  height: 90%;
+  text-align: center;
+  width: 200px;
+  height: 200px;
   background-color: #343434;
 }
 .titleTop {

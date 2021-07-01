@@ -14,19 +14,19 @@
         </p>
         <form class="my-6">
           <label for="email">E-mail</label>
-          <input id="emailForm" type="text" name="email" />
+          <input v-model="email" type="text" name="email" />
           <label for="password">Contraseña</label>
-          <input id="passwordForm" type="password" name="password" />
+          <input v-model="password" type="password" name="password" />
           <div class="containerCheckbox">
             <input class="theCheckbox" type="checkbox" name="Terms" />
             <label for="Terms">Acepto los términos y condiciones</label>
           </div>
           <router-link
             class="goPrincipalButton mr-10 mt-2"
-            :to="{ name: 'registerDetails', params: { step: 'stepRol' } }"
+            :to="{ name: 'registerDetails', params: { user: this.user } }"
           >
             <px-button
-              @custom-click="nextPage"
+              @custom-click="insertData"
               class="text-2xl"
               :color="buttonColor"
               type="button"
@@ -62,20 +62,41 @@
 </template>
 <script>
 import PxButton from "@/components/PxButton";
+import UserService from "@/services/user-service.js";
 
 export default {
+  name: "SignUp",
   data() {
     return {
       buttonColor: "black",
       noData: false,
+      email: "",
+      password: "",
+      userData: {
+        email: "",
+        password: "",
+      },
+      user: {},
     };
   },
   components: {
     PxButton,
   },
   methods: {
-    nextPage() {
-      this.numberPage += 1;
+    registerUser(userVariable) {
+      UserService.create(userVariable)
+        .then((response) => {
+          console.log(response);
+          this.$route.params.user = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    insertData() {
+      this.userData.email = this.email;
+      this.userData.password = this.password;
+      this.registerUser(this.userData);
     },
   },
 };

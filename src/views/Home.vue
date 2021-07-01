@@ -8,10 +8,15 @@
         gap-y-4
         items-center
         justify-between
-        py-20
+        pb-20
       "
     >
+      <h1 class="homeTextTitle">Empresas Destacadas</h1>
+      <px-list :users="enterprises"></px-list>
+      <h1 class="homeTextTitle">Freelancers Destacados</h1>
       <px-list :users="freelancers"></px-list>
+      <h1 class="homeTextTitle">Inversores Destacados</h1>
+      <px-list :users="investors"></px-list>
     </div>
     <px-message :isAny="propsMessage">
       Descubre la oportunidad de tu vida con 2NEL</px-message
@@ -25,43 +30,9 @@ import PxList from "@/components/welcomeComponents/PxList";
 import PxMessage from "@/components/PxMessage";
 
 //API
-/*
-import ApiService from "@/services/api-service.js";
-
-ApiService.getAll()
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((e) => {
-    console.log(e);
-  });
-
-fetch("http://tunelapi-001-site1.ftempurl.com/api/freelancers")
-  .then((response) => response.json())
-  .then((data) => console.log(data));
-
-async function getData(url = "") {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-}
-
-getData("http://tunelapi-001-site1.ftempurl.com/api/freelancers").then(
-  (data) => {
-    console.log(data); // JSON data parsed by `data.json()` call
-  }
-);*/
+import FreelancerService from "@/services/freelancer-service.js";
+import InvestorService from "@/services/investor-service.js";
+import EnterpriseService from "@/services/enterprise-service.js";
 
 export default {
   name: "Home",
@@ -72,28 +43,9 @@ export default {
         isText: false,
         imageUrl: "image1",
       },
-      freelancers: [
-        {
-          name: "Javier Alanoca Farfán",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-        {
-          name: "Dana Vallejos Nestares",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-        {
-          name: "Jesús Romero Rivera",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-        {
-          name: "Jesús Daniel Rivera",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-      ],
+      freelancers: [],
+      enterprises: [],
+      investors: [],
     };
   },
   components: {
@@ -101,11 +53,80 @@ export default {
     PxMessage,
     PxList,
   },
+  methods: {
+    getDataFreelancer() {
+      FreelancerService.getAll()
+        .then((response) => {
+          this.freelancers = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDataInvestor() {
+      InvestorService.getAll()
+        .then((response) => {
+          this.investors = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDataEnterprise() {
+      EnterpriseService.getAll()
+        .then((response) => {
+          this.enterprises = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  mounted() {
+    this.getDataFreelancer();
+    this.getDataInvestor();
+    this.getDataEnterprise();
+  },
 };
 </script>
 
 <style scoped>
 .list-container {
   height: auto;
+  display: flex;
+  flex-direction: column;
+}
+.homeTextTitle {
+  padding: 0 8vw;
+  align-self: flex-start !important;
+  margin: 20px 0;
+  font-size: 4rem;
+  text-align: left;
+  font-family: var(--principal-font);
+}
+.homeTextTitle::after {
+  content: ":";
+}
+@media only screen and (max-width: 1024px) {
+  .homeTextTitle {
+    font-size: 3.2rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .homeTextTitle {
+    font-size: 2.6rem;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .homeTextTitle {
+    align-self: center !important;
+    margin: 0 0 5px 0;
+  }
+  .homeTextTitle::after {
+    content: "";
+  }
+  .list-container {
+    padding: 3rem 0 !important;
+  }
 }
 </style>

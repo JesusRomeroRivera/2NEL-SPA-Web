@@ -51,11 +51,11 @@ export default {
     },
     whatSelected() {
       return this.first
-        ? "entrepeneur"
+        ? "investor"
         : this.second
         ? "freelancer"
         : this.third
-        ? "investor"
+        ? "entrepreneur"
         : "";
     },
   },
