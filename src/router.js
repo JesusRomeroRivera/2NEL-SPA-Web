@@ -8,6 +8,7 @@ import Login from "@/views/Login";
 import SignUp from "@/views/SignUp";
 import Principal from "@/views/Principal";
 import Solicitudes from "@/views/Solicitudes";
+import Profile from "@/views/Profile";
 import RegisterDetails from "@/views/RegisterDetails";
 import Error from "@/views/Error";
 
@@ -49,7 +50,7 @@ export default new Router({
       component: RegisterDetails,
     },
     {
-      path: "/principal/:id",
+      path: "/principal",
       name: "principal",
       component: Principal,
     },
@@ -57,6 +58,11 @@ export default new Router({
       path: "/principal/solicitudes/",
       name: "solicitudes",
       component: Solicitudes,
+    },
+    {
+      path: "/principal/profile/",
+      name: "profile",
+      component: Profile,
     },
     {
       path: "*",

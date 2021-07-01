@@ -1,6 +1,12 @@
 <template>
   <header class="shadow">
-    <nav v-if="getRoute != 'principal'">
+    <nav
+      v-if="
+        getRoute != 'principal' &&
+        getRoute != 'solicitudes' &&
+        getRoute != 'profile'
+      "
+    >
       <nav
         class="
           inOff
@@ -56,7 +62,13 @@
         </div>
       </nav>
     </nav>
-    <nav v-if="getRoute == 'principal'">
+    <nav
+      v-if="
+        this.getRoute == 'principal' ||
+        this.getRoute == 'solicitudes' ||
+        this.getRoute == 'profile'
+      "
+    >
       <nav
         class="
           inOff
@@ -71,19 +83,34 @@
         <div class="theImage flex items-center flex-shrink-0 text-black mr-6">
           <px-icon class="mr-2" />
           <router-link
-            :to="{ name: 'home' }"
+            :to="{
+              name: 'principal',
+              params: { user: this.$route.params.user },
+            }"
             class="text-3xl header--title font-semibold tracking-tight"
             >2NEL</router-link
           >
         </div>
         <div class="navBig">
           <div class="flex gap-8 items-center mr-4">
-            <router-link :to="{ name: 'principal' }">Inicio</router-link>
-            <router-link :to="{ name: 'solicitudes' }">Solicitudes</router-link>
+            <router-link
+              :to="{
+                name: 'principal',
+                params: { user: this.$route.params.user },
+              }"
+              >Inicio</router-link
+            >
+            <router-link
+              :to="{
+                name: 'profile',
+                params: { user: this.$route.params.user },
+              }"
+              >Perfil</router-link
+            >
             <img src="../../assets/iconLupa.png" alt="Lupa" />
-            <img src="../../assets/iconHeart.png" alt="Corazón" />
-            <img src="../../assets/iconAlarm.png" alt="Campanita" />
-            <div class="theFoto" src="" alt=""></div>
+            <div class="theFoto flex justify-center items-center">
+              <div>V</div>
+            </div>
           </div>
         </div>
         <div class="navSmall">
@@ -129,7 +156,7 @@ export default {
   },
   computed: {
     getRoute() {
-      return this.$route.path.substring(1, 10);
+      return this.$route.name;
     },
   },
   methods: {

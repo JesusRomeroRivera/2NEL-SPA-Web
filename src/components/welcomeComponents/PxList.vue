@@ -1,10 +1,13 @@
 <template>
   <section class="w-10/12 flex gap-x-4">
     <article class="card flex flex-col" v-for="u in users" :key="u.name">
-      <img class="bg-gray-200" />
+      <img :src="u.imageUrl" class="bg-gray-200" />
       <div class="p-8 w-full border-box text-container">
         <h1>{{ u.firstName }}{{ u.name }} {{ u.lastName }}</h1>
-        <p class="my-8">{{ u.description }}</p>
+        <p class="my-8">
+          {{ u.description.substring(0, 40)
+          }}{{ u.description.length > 50 ? "..." : "" }}
+        </p>
         <small class="text-gray-700">De: {{ u.city }}</small>
       </div>
     </article>
@@ -18,6 +21,7 @@ export default {
       buttonColor: "black",
     };
   },
+  computed: {},
   components: {},
 };
 </script>
@@ -25,13 +29,16 @@ export default {
 section {
   height: 38.5rem;
   overflow-x: scroll;
+  overflow-y: hidden;
 }
 .card {
   height: 100%;
+  width: 27vw;
   min-width: 32.5%;
 }
 img {
-  height: 20rem;
+  height: 19rem;
+  width: auto;
 }
 h1 {
   font-size: 2.5rem;

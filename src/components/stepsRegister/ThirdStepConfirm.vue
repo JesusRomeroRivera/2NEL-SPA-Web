@@ -7,13 +7,22 @@
       <div class="topDetails">
         <div class="datosDetails flex flex-col justify-center">
           <h2>Nombres Completos</h2>
-          <h5>{{ data.name }} {{ data.surname }}</h5>
+          <h5>{{ data.firstName }} {{ data.lastName }}</h5>
           <h2>Tipo:</h2>
           <h5>{{ type.toUpperCase() }}</h5>
         </div>
         <div class="imgDetails flex flex-col items-center">
           <h2 class="text-center">Foto de perfil</h2>
-          <img :src="data.imageUrl" alt="Tu Perfil" />
+          <img
+            v-if="data.imageUrl != ''"
+            :src="data.imageUrl"
+            alt="Tu Perfil"
+          />
+          <img
+            v-if="data.imageUrl == ''"
+            src="./../../assets/avatarBlanco.png"
+            alt="Tu Perfil"
+          />
         </div>
       </div>
       <div class="descriptionDetail mt-4">
@@ -21,9 +30,11 @@
         <p class="small">
           {{ data.description }}
         </p>
-        <h2 class="topMargin">Especialidad</h2>
-        <div class="skillsList flex gap-2">
-          <p class="indiText" :key="l" v-for="l in data.skills">{{ l }}</p>
+        <h2 v-if="this.type == 'freelancer'" class="topMargin">Especialidad</h2>
+        <div v-if="this.type == 'freelancer'" class="skillsList flex gap-2">
+          <p v-if="this.type == 'freelancer'" class="indiText">
+            {{ data.specialty }}
+          </p>
         </div>
       </div>
     </div>
@@ -98,12 +109,12 @@ export default {
     },
     changePageFourth() {
       if (this.type == "freelancer")
-        this.registerFreelancer(this.$route.params.user.id, this.data);
+        this.registerFreelancer(this.$route.params.user, this.data);
       if (this.type == "investor")
-        this.registerInvestor(this.$route.params.user.id, this.data);
+        this.registerInvestor(this.$route.params.user, this.data);
       if (this.type == "entrepreneur") {
-        this.registerEntrepreneur(this.$route.params.user.id, this.data);
-        this.$emit("changePageEnterprise", this.$route.params.user.id);
+        this.registerEntrepreneur(this.$route.params.user, this.data);
+        this.$emit("changePageEnterprise", this.$route.params.user);
       } else {
         this.$emit("changePageFourth");
       }

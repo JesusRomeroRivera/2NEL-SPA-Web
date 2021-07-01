@@ -2,18 +2,18 @@
   <div class="w-screen flex flex-col">
     <div class="containerSearch">
       <div class="special">
-        <px-prominent :data="freelancers[1]"></px-prominent>
+        <px-prominent :details="freelancers[0]"></px-prominent>
       </div>
       <div class="list">
-        <px-list-vertical :users="freelancers"></px-list-vertical>
+        <px-list-vertical :users="enterprisesNotCero"></px-list-vertical>
       </div>
     </div>
     <div class="list-container gap-y-4 pb-20">
-      <h1 class="homeTextTitle">StartUps Destacadas</h1>
-      <px-list :users="freelancers"></px-list>
-      <h1 class="homeTextTitle">Freelancers Destacados</h1>
-      <px-list :users="freelancers"></px-list>
       <h1 class="homeTextTitle">Inversores Destacados</h1>
+      <px-list :users="investors"></px-list>
+      <h1 class="homeTextTitle">StartUps Destacadas</h1>
+      <px-list :users="enterprisesNotCero"></px-list>
+      <h1 class="homeTextTitle">Freelancers Destacados</h1>
       <px-list :users="freelancers"></px-list>
     </div>
   </div>
@@ -23,6 +23,11 @@ import PxList from "@/components/welcomeComponents/PxList";
 import PxListVertical from "@/components/principalHome/PxListVertical";
 import PxProminent from "@/components/principalHome/PxProminent";
 
+import FreelancerService from "@/services/freelancer-service.js";
+import InvestorService from "@/services/investor-service.js";
+import EnterpriseService from "@/services/enterprise-service.js";
+import EntrepreneurService from "@/services/entrepreneur-service.js";
+
 export default {
   components: {
     PxList,
@@ -31,29 +36,71 @@ export default {
   },
   data() {
     return {
-      freelancers: [
-        {
-          name: "Javier Alanoca Farfán",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-        {
-          name: "Dana Vallejos Nestares",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-        {
-          name: "Jesús Romero Rivera",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-        {
-          name: "Jesús Daniel Rivera",
-          description: '"Me considero una persona responsable y trabajadora"',
-          enterprise: "Muru",
-        },
-      ],
+      freelancers: [],
+      enterprises: [],
+      enterprisesNotCero: [],
+      investors: [],
+      userInformation: {},
     };
+  },
+  methods: {
+    getDataFreelancer() {
+      FreelancerService.getAll()
+        .then((response) => {
+          this.freelancers = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDataInvestor() {
+      InvestorService.getAll()
+        .then((response) => {
+          this.investors = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDataEnterprise() {
+      EnterpriseService.getAll()
+        .then((response) => {
+          this.enterprises = response.data;
+          this.enterprisesNotCero = this.enterprises;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    setUser() {
+      EntrepreneurService.get(this.$route.params.user)
+        .then((response) => {
+          this.userInformation = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      FreelancerService.get(this.$route.params.user)
+        .then((response) => {
+          this.userInformation = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      InvestorService.get(this.$route.params.user)
+        .then((response) => {
+          this.userInformation = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  beforeMount() {
+    this.getDataFreelancer();
+    this.getDataInvestor();
+    this.getDataEnterprise();
+    if (this.$route.params.user != null) this.setUser();
   },
 };
 </script>

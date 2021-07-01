@@ -9,6 +9,7 @@
         ? 'white'
         : 'withBorder'
     "
+    type="button"
   >
     <p>
       <slot></slot>

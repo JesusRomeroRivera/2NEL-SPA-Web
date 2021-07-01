@@ -1,6 +1,9 @@
 import http from "./http";
 
 class EntrepreneurService {
+  get(id) {
+    return http.get(`/entrepreneurs/${id}`);
+  }
   getAll() {
     return http.get("/entrepreneurs");
   }

@@ -15,7 +15,12 @@
       >
       <div class="firstDetails grid">
         <div class="imgDetails flex flex-col justify-around items-start">
-          <img :src="imageUrl" alt="Tu Perfil" />
+          <img
+            v-if="imageUrl == ''"
+            src="./../../assets/avatarBlanco.png"
+            alt="Tu Perfil"
+          />
+          <img v-if="imageUrl != ''" :src="imageUrl" alt="Tu Perfil" />
           <input
             v-model="imageUrl"
             type="url"
@@ -38,11 +43,17 @@
         </div>
       </div>
       <div class="habilidades">
-        <h2 class="finalTitle">
+        <h2 v-if="this.type == 'freelancer'" class="finalTitle">
           Especialidad:
-          <small>Habilidad que consideres resaltar</small>
+          <small v-if="this.type == 'freelancer'"
+            >Habilidad que consideres resaltar</small
+          >
         </h2>
-        <input v-model="specialty" type="text" />
+        <input
+          v-if="this.type == 'freelancer'"
+          v-model="specialty"
+          type="text"
+        />
         <h2 class="finalTitle">Descripción</h2>
         <textarea
           v-model="description"
@@ -77,7 +88,7 @@
 import PxButton from "@/components/PxButton";
 
 export default {
-  props: ["data"],
+  props: ["data", "type"],
   data() {
     return {
       bottonWhite: "white",

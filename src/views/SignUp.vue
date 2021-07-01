@@ -18,12 +18,19 @@
           <label for="password">Contraseña</label>
           <input v-model="password" type="password" name="password" />
           <div class="containerCheckbox">
-            <input class="theCheckbox" type="checkbox" name="Terms" />
-            <label for="Terms">Acepto los términos y condiciones</label>
+            <input
+              v-model="check"
+              class="theCheckbox"
+              type="checkbox"
+              name="Terms"
+            />
+            <label @click="toggleModal" class="TheEspecial" for="Terms"
+              >Acepto los términos y condiciones</label
+            >
           </div>
-          <router-link
+          <div
             class="goPrincipalButton mr-10 mt-2"
-            :to="{ name: 'registerDetails', params: { user: this.user } }"
+            :to="{ name: 'registerDetails' }"
           >
             <px-button
               @custom-click="insertData"
@@ -32,7 +39,7 @@
               type="button"
               >Siguiente --></px-button
             >
-          </router-link>
+          </div>
           <p v-if="noData" class="text-right mr-12 text-red-600 m-0">
             Por favor ingrese todos los datos
           </p>
@@ -56,6 +63,33 @@
             >
           </div>
         </div>
+        <div
+          v-if="modalView"
+          class="emailModal flex justify-center items-center w-screen shadow"
+        >
+          <div class="content--container p-6 flex flex-col justify-center">
+            <div class="button-container flex flex-col items-center gap-20">
+              <p class="textTerminos">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Maecenas sed facilisis tortor. Proin pellentesque mauris arcu,
+                quis mollis massa maximus et. Maecenas eleifend sem neque, at
+                feugiat ante luctus vitae. Phasellus venenatis facilisis
+                feugiat. Donec efficitur posuere turpis, vel iaculis felis
+                venenatis ac. Duis vitae ex ut nulla malesuada rutrum eget sit
+                amet velit. Aliquam nibh mi, pretium sit amet leo et, porta
+                porta risus. Vivamus faucibus eget eros a lacinia. Nulla augue
+                risus, laoreet a ornare sit amet, venenatis nec dui. In hac
+                habitasse platea dictumst. Nullam sed mattis mauris, eget
+                dapibus odio. In nec pellentesque justo. Integer blandit
+                vulputate eleifend. Ut condimentum, mi ut molestie lacinia,
+                lectus enim ornare odio, sit amet tincidunt nunc lorem a risus.
+                Nullam lorem dui, efficitur pretium viverra porta, efficitur nec
+                urna.
+              </p>
+              <p class="m-0 volverAncle" @click="toggleModal">Volver</p>
+            </div>
+          </div>
+        </div>
       </article>
     </section>
   </div>
@@ -72,10 +106,12 @@ export default {
       noData: false,
       email: "",
       password: "",
+      modalView: false,
       userData: {
         email: "",
         password: "",
       },
+      check: false,
       user: {},
     };
   },
@@ -87,21 +123,48 @@ export default {
       UserService.create(userVariable)
         .then((response) => {
           console.log(response);
-          this.$route.params.user = response.data;
+          this.$route.params.user = response.data.id;
         })
         .catch((e) => {
           console.log(e);
         });
     },
+    toggleModal() {
+      this.modalView = !this.modalView;
+    },
     insertData() {
-      this.userData.email = this.email;
-      this.userData.password = this.password;
-      this.registerUser(this.userData);
+      if (this.check) {
+        this.userData.email = this.email;
+        this.userData.password = this.password;
+        this.registerUser(this.userData);
+        this.$router.push({
+          path: "/registerDetails",
+        });
+      } else {
+        alert("Acepte los términos y condiciones");
+      }
     },
   },
 };
 </script>
 <style scoped>
+.content--container {
+  background-color: white;
+  width: 40rem;
+  height: 15rem;
+  border-radius: 1rem;
+  position: absolute;
+}
+.textTerminos {
+  font-family: var(--text-font);
+}
+.emailModal {
+  background-color: white;
+  position: absolute;
+  top: 8vh;
+  left: 0;
+  height: 83.5vh;
+}
 .facebookLogoBlanco,
 .googleLogoBlanco {
   width: 2rem;
@@ -128,6 +191,10 @@ p {
   font-family: var(--principal-font);
   font-size: 1.4rem;
   font-weight: 400;
+}
+.TheEspecial:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 section {
   width: 100%;

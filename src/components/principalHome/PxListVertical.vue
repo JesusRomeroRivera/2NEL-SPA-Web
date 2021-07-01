@@ -3,16 +3,21 @@
     <article class="card flex" v-for="u in users" :key="u.name">
       <div class="p-6 border-box text-container">
         <h1>{{ u.name }}</h1>
-        <p>{{ u.description }}</p>
-        <small class="text-gray-700">De: {{ u.enterprise }}</small>
+        <p>{{ u.description.substring(0, 40) }}...</p>
+        <small class="text-gray-700">De: {{ u.email }}</small>
       </div>
-      <img class="bg-gray-200" />
+      <img :src="u.imageUrl" class="bg-gray-200" />
     </article>
   </section>
 </template>
 <script>
 export default {
   props: ["users"],
+  data() {
+    return {
+      userInformation: "",
+    };
+  },
 };
 </script>
 <style scoped>

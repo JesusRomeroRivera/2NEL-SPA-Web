@@ -29,7 +29,9 @@
         >
       </div>
       <div class="buttonContainer flex justify-end items-center">
-        <router-link :to="{ name: 'principal', params: { user: data.name } }">
+        <router-link
+          :to="{ name: 'principal', params: { user: this.$route.params.user } }"
+        >
           <px-button class="text-2xl" :color="bottonBlack">Siguiente</px-button>
         </router-link>
       </div>

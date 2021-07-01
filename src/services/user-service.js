@@ -15,6 +15,10 @@ class UserService {
     return http.delete(`/users/${id}`);
   }
 
+  login(data) {
+    return http.post(`/users/authenticate`, data);
+  }
+
   getAll() {
     return http.get("/users");
   }

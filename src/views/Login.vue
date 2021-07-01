@@ -8,20 +8,22 @@
         <h1>Iniciar Sesión</h1>
         <form class="mt-10">
           <label for="email">E-mail</label>
-          <input id="emailForm" type="text" name="email" />
+          <input v-model="email" id="emailForm" type="text" name="email" />
           <label for="password">Contraseña</label>
-          <input id="passwordForm" type="password" name="password" />
-          <router-link
-            class="goPrincipalButton mr-10 mt-10"
-            :to="{ name: 'principal' }"
-          >
+          <input
+            v-model="password"
+            id="passwordForm"
+            type="password"
+            name="password"
+          />
+          <div class="goPrincipalButton mr-10 mt-10">
             <px-button
               @custom-click="sumbitLogin"
               class="text-2xl"
               :color="buttonColor"
               >Iniciar Sesión</px-button
             >
-          </router-link>
+          </div>
           <p v-if="noData" class="text-right mr-12 text-red-600 m-0">
             Por favor ingrese todos los datos
           </p>
@@ -72,6 +74,7 @@
 
 <script>
 import PxButton from "@/components/PxButton";
+import UserService from "@/services/user-service";
 
 export default {
   data() {
@@ -80,10 +83,20 @@ export default {
       modalView: false,
       noEmail: false,
       noData: false,
+      email: "",
+      password: "",
     };
   },
   components: {
     PxButton,
+  },
+  computed: {
+    whatSelected() {
+      return {
+        email: this.email,
+        password: this.password,
+      };
+    },
   },
   methods: {
     toggleModal() {
@@ -98,15 +111,14 @@ export default {
       }
     },
     sumbitLogin() {
-      if (
-        document.getElementById("emailForm").value == "" ||
-        document.getElementById("passwordForm").value == ""
-      ) {
-        this.noData = true;
-        console.log("Aiuda");
-      } else {
-        this.noData = false;
-      }
+      UserService.login(this.whatSelected).then((response) => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data);
+        this.$router.push({
+          path: "/principal",
+          params: { userInformation: response.data },
+        });
+      });
     },
   },
 };

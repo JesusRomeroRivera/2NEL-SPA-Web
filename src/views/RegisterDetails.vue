@@ -8,6 +8,7 @@
     ></first-step-rol>
     <second-step-account
       :data="this.getTheData"
+      :type="this.type"
       @changePageThree="changePageThree"
       @changePageOne="changePageOne"
       @getUser2="getUser2"

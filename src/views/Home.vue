@@ -82,7 +82,11 @@ export default {
         });
     },
   },
-  mounted() {
+  beforeMount() {
+    localStorage.setItem(
+      "token",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEwMCIsIm5iZiI6MTYyNTExODIzOSwiZXhwIjoxNjI2MzI3ODM5LCJpYXQiOjE2MjUxMTgyMzl9._fzdDSFDw08opNdPQv0KEnta_GBPYYqfuRkQD9M_q-Q"
+    );
     this.getDataFreelancer();
     this.getDataInvestor();
     this.getDataEnterprise();
@@ -92,6 +96,7 @@ export default {
 
 <style scoped>
 .list-container {
+  width: 100vw;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -99,6 +104,7 @@ export default {
 .homeTextTitle {
   padding: 0 8vw;
   align-self: flex-start !important;
+  width: 84vw;
   margin: 20px 0;
   font-size: 4rem;
   text-align: left;

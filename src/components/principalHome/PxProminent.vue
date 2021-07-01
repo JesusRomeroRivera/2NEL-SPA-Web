@@ -1,18 +1,24 @@
 <template>
   <section>
     <article class="card">
-      <img class="bg-gray-200" />
+      <img :src="details.imageUrl" class="bg-gray-200" />
       <div class="p-6 border-box text-container">
-        <h1>{{ data.name }}</h1>
-        <p>{{ data.description }}</p>
-        <small class="text-gray-700">De: {{ data.enterprise }}</small>
+        <h1>{{ details.firstName }}</h1>
+        <p>{{ details.description }}</p>
+        <small class="text-gray-700">De: {{ details.city }}</small>
       </div>
     </article>
   </section>
 </template>
 <script>
 export default {
-  props: ["data"],
+  props: ["details"],
+  data() {
+    return {};
+  },
+
+  methods: {},
+  beforeMount() {},
 };
 </script>
 <style scoped>
